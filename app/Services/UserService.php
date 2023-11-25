@@ -47,9 +47,8 @@ class UserService
     public function updateById($data, $id)
     {
         $validator = Validator::make($data, [
-            'name'      => 'required',
-            'email'     => 'required|email|unique:users,email,' . $id,
-            'password'  => 'required|min:8'
+            'email'     => 'email|unique:users,email,' . $id,
+            'password'  => 'min:8'
         ]);
 
         //if validation fails
@@ -59,11 +58,7 @@ class UserService
 
         //create user
         $user = User::findOrFail($id);
-        $user->update([
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => bcrypt($data['password'])
-        ]);
+        $user->update($data);
 
         return $user;
     }

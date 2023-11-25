@@ -22,4 +22,5 @@ Route::post('/login', LoginController::class)->name('login');
 
 Route::middleware('auth:api')->group(function () {
     Route::resource('users', UserController::class);
+    Route::get('get-me', [UserController::class, 'getMe'])->name('users.get-me');
 });

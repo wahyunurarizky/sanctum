@@ -9,6 +9,7 @@ use App\Http\Response\SuccessResponse;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -68,6 +69,17 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = $this->userService->deleteById($id);
+        return SuccessResponse::send([
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * get me.
+     */
+    public function getMe()
+    {
+        $user = $this->userService->getOne(['id' => Auth::id()]);
         return SuccessResponse::send([
             'user' => $user
         ]);
