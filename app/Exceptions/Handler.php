@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Enums\STATUS;
+use App\Enums\Status;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
@@ -30,15 +30,15 @@ class Handler extends ExceptionHandler
             //
         });
 
-        $this->renderable(function (\Exception $e, Request $request) {
+        $this->renderable(function (Throwable $e, Request $request) {
 
             if ($request->is('api/*')) {
-                $code = ($e->getCode() || $e->getCode() === 0) ? 500 : $e->getCode();
-                $status = $e instanceof AppExeption ? $e->status : STATUS::ERROR;
+                $code = (!$e->getCode() || $e->getCode() === 0) ? 500 : $e->getCode();
+                $status = $e instanceof AppExeption ? $e->status : Status::ERROR;
 
                 if ($e instanceof AuthenticationException) {
                     $code = 401;
-                    $status = STATUS::FAIL;
+                    $status = Status::FAIL;
                 }
 
                 return response()->json([

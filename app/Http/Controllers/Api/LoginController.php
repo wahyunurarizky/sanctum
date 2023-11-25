@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\AppExeption;
 use App\Http\Controllers\Controller;
+use App\Http\Response\SuccessResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,14 +31,13 @@ class LoginController extends Controller
 
         //if auth failed
         if (!$token = auth()->guard('api')->attempt($credentials)) {
-            throw new AppExeption('Email atau Password Anda salah', 401);
+            throw new AppExeption('Email or password incorrect', 401);
         }
 
         //if auth success
-        return response()->json([
-            'success' => true,
+        return SuccessResponse::send([
             'user'    => auth()->guard('api')->user(),
             'token'   => $token
-        ], 200);
+        ]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Enums\STATUS;
+use App\Enums\Status;
 use Exception;
 
 class AppExeption extends Exception

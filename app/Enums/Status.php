@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum STATUS: string
+enum Status: string
 {
     case SUCCESS = 'success';
     case ERROR = 'error';
